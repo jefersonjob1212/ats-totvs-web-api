@@ -1,0 +1,110 @@
+# ===== .NET / C# =====
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.mdb
+*.log
+*.cache
+*.vspscc
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+project.lock.json
+artifacts/
+*.snk
+*.dbmdl
+*.bak
+*.ldf
+*.ndf
+*.vshost.*
+TestResults/
+x64/
+x86/
+_ReSharper*/
+*.DotSettings.user
+*.DotCover
+*.ncrunch*
+*.localhistory
+*.resharper
+*.opendb
+.vscode/
+launchSettings.json
+
+# ===== Rider / JetBrains =====
+.idea/
+*.sln.iml
+*.iml
+.idea/.idea/
+.idea/*/workspace.xml
+.idea/*/tasks.xml
+.idea/*/usage.statistics.xml
+.idea/*/dictionaries
+.idea/*/shelf/
+.idea/*/contentModel.xml
+.idea/*/modules.xml
+.idea/*/vcs.xml
+.idea/httpRequests/
+.idea/sonarlint/
+
+# ===== OS / Editor =====
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*.tmp
+*.temp
+
+# ===== Logs / Temp =====
+*.log
+logs/
+log/
+*.tmp
+*.temp
+temp/
+tmp/
+
+# ===== MongoDB data (caso rode localmente) =====
+/data/
+*.bson
+*.ns
+*.wt
+*.json
+
+# ===== Build / Publish =====
+/publish/
+/dist/
+/build/
+/out/
+
+# ===== Environment / Config =====
+.env
+.env.local
+.env.development
+.env.production
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# ===== Coverage / Analysis =====
+coverage/
+*.coverage
+*.coveragexml
+*.codecov
+*.sonarqube/
+
+# ===== Rider Plugin Settings (opcional ignorar) =====
+.idea/.idea-index
+.idea/httpRequests
+.idea/dataSources
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dataSources.ids
+.idea/dynamic.xml
+
+# ===== Others =====
+*.nupkg
+*.nuspec
+*.vsix
