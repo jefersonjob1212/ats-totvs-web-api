@@ -7,13 +7,13 @@ public class Candidatura
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public int Id { get; set; }
+    public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
     [BsonRepresentation(BsonType.ObjectId)]
-    public int CandidatoId { get; set; }
+    public string CandidatoId { get; set; }
 
     [BsonRepresentation(BsonType.ObjectId)]
-    public int VagaId { get; set; }
+    public string VagaId { get; set; }
 
     public DateTime DataCandidatura { get; set; }
 }

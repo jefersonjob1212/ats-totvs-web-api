@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Totvs.ATS.Domain.Interfaces;
 using Totvs.ATS.Infrastructure.Context;
@@ -22,7 +23,8 @@ public class MongoDbRepositoryBase<T> : IMongoDbRepositoryBase<T>  where T : cla
 
     public async Task<T?> FindByIdAsync(string id)
     {
-        var filter = Builders<T>.Filter.Eq("_id", id);
+        var objectId = ObjectId.Parse(id);
+        var filter = Builders<T>.Filter.Eq("_id", objectId);
         return await _collection.Find(filter).FirstOrDefaultAsync();
     }
 
@@ -31,13 +33,15 @@ public class MongoDbRepositoryBase<T> : IMongoDbRepositoryBase<T>  where T : cla
 
     public Task UpdateAsync(string id, T entity)
     {
-        var filter = Builders<T>.Filter.Eq("_id", id);
+        var objectId = ObjectId.Parse(id);
+        var filter = Builders<T>.Filter.Eq("_id", objectId);
         return _collection.ReplaceOneAsync(filter, entity);
     }
 
     public Task DeleteAsync(string id)
     {
-        var filter = Builders<T>.Filter.Eq("_id", id);
+        var objectId = ObjectId.Parse(id);
+        var filter = Builders<T>.Filter.Eq("_id", objectId);
         return _collection.DeleteOneAsync(filter);
     }
 }

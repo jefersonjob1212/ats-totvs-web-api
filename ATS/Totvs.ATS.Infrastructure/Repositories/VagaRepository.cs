@@ -6,8 +6,8 @@ namespace Totvs.ATS.Infrastructure.Repositories;
 
 public class VagaRepository : MongoDbRepositoryBase<Vaga>, IVagaRepository
 {
-    public VagaRepository(MongoDbContext context, string collectionName) 
-        : base(context, collectionName)
+    public VagaRepository(MongoDbContext context) 
+        : base(context, "vagas")
     {
     }
 }

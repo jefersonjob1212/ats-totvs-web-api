@@ -1,0 +1,6 @@
+@Totvs.ATS.WebAPI_HostAddress = http://localhost:5284
+
+GET {{Totvs.ATS.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -8,13 +8,13 @@ public class Vaga
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public int Id { get; set; }
+    public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
     
     public string Titulo { get; set; }
     public string Descricao { get; set; }
     public string Localizacao { get; set; }
-    public DateTime DataPublicacao { get; set; }
+    public DateTime DataPublicacao { get; set; } = DateTime.Now;
     
     [BsonRepresentation(BsonType.String)] 
-    public TipoVaga TipoVaga { get; set; }
+    public TipoVagaEnum TipoVagaEnum { get; set; }
 }
