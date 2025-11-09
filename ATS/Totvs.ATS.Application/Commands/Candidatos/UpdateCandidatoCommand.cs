@@ -6,6 +6,7 @@ namespace Totvs.ATS.Application.Commands.Candidatos;
 
 public record UpdateCandidatoCommand(
     string Id,
+    string Cpf,
     string Nome,
     string Email,
     string Telefone,

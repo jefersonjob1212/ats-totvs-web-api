@@ -7,7 +7,7 @@ using Totvs.ATS.Application.Queries.Vagas;
 using Totvs.ATS.Domain.Entities;
 using Totvs.ATS.Domain.Interfaces;
 
-namespace Totvs.ATS.Application.Handlers.Vagas;
+namespace Totvs.ATS.Application.Commands.Vagas;
 
 public class GetVagasByFilterHandler(IVagaRepository vagaRepository) : IRequestHandler<GetVagaByFilterQuery, IEnumerable<VagaDTO>>
 {
@@ -23,6 +23,6 @@ public class GetVagasByFilterHandler(IVagaRepository vagaRepository) : IRequestH
         return v =>
             (string.IsNullOrEmpty(filter.Titulo) || v.Titulo.ToLower().Contains(filter.Titulo.ToLower())) &&
             (string.IsNullOrEmpty(filter.Localizacao)  || v.Localizacao.ToLower().Contains(filter.Localizacao.ToLower())) &&
-            (!filter.TipoVaga.HasValue || v.TipoVagaEnum == filter.TipoVaga.Value);
+            (!filter.TipoVaga.HasValue || v.TipoVaga == filter.TipoVaga.Value);
     }
 }

@@ -9,7 +9,8 @@ public class Candidato
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
-    
+
+    public string Cpf { get; set; }
     public string Nome { get; set; }
     public string Email { get; set; }
     public string Telefone { get; set; }

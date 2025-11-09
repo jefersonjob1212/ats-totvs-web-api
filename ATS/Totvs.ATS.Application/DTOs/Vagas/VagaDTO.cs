@@ -9,5 +9,6 @@ public class VagaDTO
     public string Descricao { get; set; }
     public string Localizacao { get; set; }
     public DateTime DataPublicacao { get; set; }
-    public TipoVagaEnum TipoVagaEnum { get; set; }
+    public TipoVagaEnum TipoVaga { get; set; }
+    public bool Encerrada { get; set; }
 }

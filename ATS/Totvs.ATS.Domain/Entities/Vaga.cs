@@ -14,7 +14,8 @@ public class Vaga
     public string Descricao { get; set; }
     public string Localizacao { get; set; }
     public DateTime DataPublicacao { get; set; } = DateTime.Now;
+    public bool Encerrada { get; set; } = false;
     
     [BsonRepresentation(BsonType.String)] 
-    public TipoVagaEnum TipoVagaEnum { get; set; }
+    public TipoVagaEnum TipoVaga { get; set; }
 }

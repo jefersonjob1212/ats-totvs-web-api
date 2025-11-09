@@ -4,7 +4,7 @@ using Totvs.ATS.Application.DTOs.Vagas;
 using Totvs.ATS.Application.Queries.Vagas;
 using Totvs.ATS.Domain.Interfaces;
 
-namespace Totvs.ATS.Application.Handlers.Vagas;
+namespace Totvs.ATS.Application.Commands.Vagas;
 
 public class GetVagaByIdHander(IVagaRepository vagaRepository) : IRequestHandler<GetVagaByIdQuery, VagaDTO>
 {

@@ -9,5 +9,5 @@ public record UpdateVagaCommand(
     string Titulo,
     string Descricao,
     string Localizacao,
-    TipoVagaEnum TipoVagaEnum
+    TipoVagaEnum TipoVaga
     ) : IRequest<VagaDTO>;

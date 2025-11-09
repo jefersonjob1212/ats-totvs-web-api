@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Mapster;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Totvs.ATS.Application.Commands.Candidatos;
 using Totvs.ATS.Application.DTOs.Candidatos;
@@ -9,50 +10,75 @@ namespace Totvs.ATS.WebAPI.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class CandidatosController : ControllerBase
+public class CandidatosController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public CandidatosController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
+    /// <summary>
+    /// Recupera um candidato com Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(string id)
+    public async Task<ActionResult<CandidatoDTO>> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetCandidatoByIdQuery(id));
+        var result = await mediator.Send(new GetCandidatoByIdQuery(id),  cancellationToken);
         return result is null ? NotFound() : Ok(result);
     }
 
+    /// <summary>
+    /// Recupera candidatos com filtros informados
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> GetAsync([FromQuery] CandidatoFilter filter)
+    public async Task<ActionResult<IEnumerable<CandidatoDTO>>> GetAsync([FromQuery] CandidatoFilter filter, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetCandidatosByFilterQuery(filter));
+        var result = await mediator.Send(new GetCandidatosByFilterQuery(filter), cancellationToken);
         return !result.Any() ? NotFound() : Ok(result);
     }
 
+    /// <summary>
+    /// Cadastra um novo candidato
+    /// </summary>
+    /// <param name="candidato"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> PostAsync([FromBody] CandidatoCriarEditarDTO candidato)
+    public async Task<ActionResult<string>> PostAsync([FromBody] CandidatoCriarEditarDTO candidato, CancellationToken cancellationToken)
     {
-        var command = new CreateCandidatoCommand(candidato.Nome, candidato.Email, candidato.Telefone, candidato.Sexo);
-        var result = await _mediator.Send(command);
+        var command = candidato.Adapt<CreateCandidatoCommand>();
+        var result = await mediator.Send(command, cancellationToken);
         return Created("", result);
     }
     
+    /// <summary>
+    /// Atualiza os dados de um candidato
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="candidato"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutAsync([FromRoute] string id, [FromBody] CandidatoCriarEditarDTO candidato)
+    public async Task<ActionResult<CandidatoDTO>> PutAsync([FromRoute] string id, [FromBody] CandidatoCriarEditarDTO candidato, CancellationToken cancellationToken)
     {
-        var command = new UpdateCandidatoCommand(id, candidato.Nome, candidato.Email, candidato.Telefone, candidato.Sexo);
-        var result = await _mediator.Send(command);
+        var command = new UpdateCandidatoCommand(
+            id, candidato.Cpf, candidato.Nome, candidato.Email, candidato.Telefone, candidato.Sexo);
+        var result = await mediator.Send(command, cancellationToken);
         return result is null ? NotFound() : Ok(result);
     }
 
+    /// <summary>
+    /// Remove o candidato
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync([FromRoute] string id)
+    public async Task<IActionResult> DeleteAsync([FromRoute] string id, CancellationToken cancellationToken)
     {
         var command = new DeleteCandidatoCommand(id);
-        var result = await _mediator.Send(command);
+        await mediator.Send(command, cancellationToken);
         return NoContent();
     }
 }
