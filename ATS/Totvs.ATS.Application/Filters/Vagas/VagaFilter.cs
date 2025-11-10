@@ -2,7 +2,7 @@
 
 namespace Totvs.ATS.Application.Filters.Vagas;
 
-public class VagaFilter
+public class VagaFilter : FilterBase
 {
     public string? Titulo { get; set; }
     public string? Localizacao { get; set; }

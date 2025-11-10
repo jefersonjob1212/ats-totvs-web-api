@@ -35,7 +35,7 @@ public class CandidatosController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<IEnumerable<CandidatoDTO>>> GetAsync([FromQuery] CandidatoFilter filter, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetCandidatosByFilterQuery(filter), cancellationToken);
-        return !result.Any() ? NotFound() : Ok(result);
+        return !result.Items.Any() ? NotFound() : Ok(result);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class CandidatosController(IMediator mediator) : ControllerBase
     {
         var command = candidato.Adapt<CreateCandidatoCommand>();
         var result = await mediator.Send(command, cancellationToken);
-        return Created("", result);
+        return Created("", new {id = result});
     }
     
     /// <summary>

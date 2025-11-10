@@ -4,18 +4,32 @@ using MediatR;
 using Totvs.ATS.Application.DTOs.Candidatos;
 using Totvs.ATS.Application.Filters.Candidatos;
 using Totvs.ATS.Application.Queries.Candidatos;
+using Totvs.ATS.Application.Responses;
 using Totvs.ATS.Domain.Entities;
 using Totvs.ATS.Domain.Interfaces;
 
 namespace Totvs.ATS.Application.Handlers.Candidatos;
 
-public class GetCandidatosByFilterHandler(ICandidatoRepository candidatoRepository) : IRequestHandler<GetCandidatosByFilterQuery, IEnumerable<CandidatoDTO>>
+public class GetCandidatosByFilterHandler(ICandidatoRepository candidatoRepository) : IRequestHandler<GetCandidatosByFilterQuery, PagedResponse<CandidatoDTO>>
 {
-    public async Task<IEnumerable<CandidatoDTO>> Handle(GetCandidatosByFilterQuery request, CancellationToken cancellationToken)
+    public async Task<PagedResponse<CandidatoDTO>> Handle(GetCandidatosByFilterQuery request, CancellationToken cancellationToken)
     {
-        var expression = BuilderFilter(request.Filtro);
+        var filter = request.Filtro;
+        var expression = BuilderFilter(filter);
         var candidatos = await candidatoRepository.FindAsync(expression);
-        return candidatos.Adapt<IEnumerable<CandidatoDTO>>();
+        var total = candidatos.Count();
+        var paged = candidatos
+            .Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
+            .ToList();
+        
+        var dto = paged.Adapt<IEnumerable<CandidatoDTO>>();
+        
+        return new PagedResponse<CandidatoDTO>(
+            dto,
+            filter.PageNumber,
+            filter.PageSize,
+            total);
     }
 
     private static Expression<Func<Candidato, bool>> BuilderFilter(CandidatoFilter filtro)

@@ -2,7 +2,7 @@
 
 namespace Totvs.ATS.Application.Filters.Candidatos;
 
-public class CandidatoFilter
+public class CandidatoFilter : FilterBase
 {
     public string? Nome { get; set; }
     public string? Email { get; set; }
