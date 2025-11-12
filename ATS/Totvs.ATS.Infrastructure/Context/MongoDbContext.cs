@@ -10,9 +10,9 @@ public class MongoDbContext
 
     public MongoDbContext(IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("MongoDB");
+        var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION") ?? configuration.GetConnectionString("MongoDB");
         var client = new MongoClient(connectionString);
-        _database = client.GetDatabase(configuration["MongoDBDatabase"]);
+        _database = client.GetDatabase(Environment.GetEnvironmentVariable("MONGO_DATABASE") ?? configuration["MongoDBDatabase"]);
     }
     
     public IMongoCollection<Candidato> Candidatos => _database.GetCollection<Candidato>("Candidatos");
