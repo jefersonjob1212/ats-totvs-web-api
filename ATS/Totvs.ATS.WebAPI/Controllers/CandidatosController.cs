@@ -24,6 +24,19 @@ public class CandidatosController(IMediator mediator) : ControllerBase
         var result = await mediator.Send(new GetCandidatoByIdQuery(id),  cancellationToken);
         return result is null ? NotFound() : Ok(result);
     }
+    
+    /// <summary>
+    /// Recupera um candidato com o CPF
+    /// </summary>
+    /// <param name="cpf"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("cpf/{cpf}")]
+    public async Task<ActionResult<CandidatoDTO>> GetByCpfAsync(string cpf, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetCandidatoByCpfQuery(cpf),  cancellationToken);
+        return result is null ? NotFound() : Ok(result);
+    }
 
     /// <summary>
     /// Recupera candidatos com filtros informados

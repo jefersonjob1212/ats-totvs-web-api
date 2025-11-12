@@ -7,4 +7,5 @@ public class VagaFilter : FilterBase
     public string? Titulo { get; set; }
     public string? Localizacao { get; set; }
     public TipoVagaEnum? TipoVaga { get; set; }
+    public bool SomenteAtivas { get; set; }
 }

@@ -18,11 +18,14 @@ public class VagasController(IMediator mediator) : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<VagaDTO>>> GetAsync([FromQuery] VagaFilter request, CancellationToken cancellationToken)
     {
         var query = new GetVagaByFilterQuery(request);
         var result = await mediator.Send(query,  cancellationToken);
-        return result.Any() ? Ok(result) : NotFound();
+        return result.Items.Any() ? Ok(result) : NotFound();
     }
 
     /// <summary>
@@ -55,9 +58,9 @@ public class VagasController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<string>> PostAsync([FromBody] CriarEditarVagaDTO request, CancellationToken cancellationToken)
     {
         var command =
-            new CreateVagaCommand(request.Titulo, request.Descricao, request.Localizacao, request.TipoVagaEnum);
+            new CreateVagaCommand(request.Titulo, request.Descricao, request.Localizacao, request.TipoVaga);
         var result = await mediator.Send(command, cancellationToken);
-        return Created(string.Empty, result);
+        return Created("", new {id = result});
     }
 
     /// <summary>
@@ -74,7 +77,7 @@ public class VagasController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<VagaDTO>> PutAsync([FromRoute] string id, [FromBody] CriarEditarVagaDTO request, CancellationToken cancellationToken)
     {
         var command = new UpdateVagaCommand(id, request.Titulo, request.Descricao, request.Localizacao,
-            request.TipoVagaEnum);
+            request.TipoVaga);
         var result = await mediator.Send(command, cancellationToken);
         return result is null ? NotFound() : Ok(result);
     }

@@ -23,7 +23,7 @@ public class CandidaturasController(IMediator  mediator) : ControllerBase
     public async Task<ActionResult<string>> VincularAsync(string vagaId, string candidatoId, CancellationToken cancellation)
     {
         var result =  await mediator.Send(new VincularCandidatoVagaCommand(candidatoId, vagaId), cancellation);
-        return Created("", result);
+        return Created("", new {id = result});
     }
 
     /// <summary>

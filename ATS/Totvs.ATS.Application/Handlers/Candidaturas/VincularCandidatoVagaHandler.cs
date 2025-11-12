@@ -22,6 +22,10 @@ public class VincularCandidatoVagaHandler(
         var candidato = await candidatoRepository.FindByIdAsync(request.CandidatoId);
         if (candidato == null)
             throw new NotFoundException("Usuário não cadastrado");
+        
+        var candidaturaExistente = await candidaturaRepository.FindAsync(c => c.VagaId == request.VagaId &&  c.CandidatoId == request.CandidatoId);
+        if (candidaturaExistente.Any())
+            throw new BusinessRuleException("Candidato já está concorrendo a esta vaga.");
 
         var candidatura = new Candidatura
         {
