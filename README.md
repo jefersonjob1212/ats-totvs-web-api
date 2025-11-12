@@ -32,3 +32,6 @@ dotnet test
 
 ## Base de Dados
 A base de Dados é a MongoDB Atlas, um banco de dados na nuvem de fácil gerenciamento. O banco está com permissão de uma semana para acesso de qualquer IP.
+
+### Autor
+Jeferson Job Ribeiro dos Santos
